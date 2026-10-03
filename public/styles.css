@@ -1,0 +1,699 @@
+/* ------------------------------------------------------------------
+   Plant log — styles
+   A Windows 95/98 desktop-application skin: beveled 3D chrome via
+   border-style outset/inset/groove/ridge, the classic silver/navy
+   palette, square corners throughout, segmented progress bars, and
+   a balloon-tip toast. Every selector below matches a class the app
+   already renders — this file changes appearance only.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* classic "Windows Standard" scheme */
+  --face:        #d4d0c8;   /* button/panel face */
+  --face-light:  #ececE4;   /* lighter panel fill (fields, table) */
+  --face-white:  #ffffff;
+  --hi:          #ffffff;   /* bevel highlight */
+  --hi-soft:     #dfdfd0;   /* soft inner highlight */
+  --sh:          #808080;   /* bevel shadow */
+  --sh-dark:     #404040;   /* bevel dark shadow */
+  --ink:         #000000;
+  --ink-soft:    #1a1a1a;
+  --muted:       #4d4d4d;
+  --rule:        #808080;
+  --rule-soft:   #a6a6a6;
+
+  --navy-dark:   #0a246a;   /* titlebar gradient start */
+  --navy-light:  #a6caf0;   /* titlebar gradient end */
+  --navy-solid:  #000080;
+  --teal:        #008080;   /* desktop backdrop */
+  --teal-wash:   #d2ffff;   
+
+  --purple-dark:   #3a1d52;
+  --purple-light:  #a385c9;
+
+  --windows95-navy: #00007A;
+  --windows95-blue: #0000ff;
+
+  /* banner head gradient colors - includes old values */
+  --mid-blue-4: rgb(18,38,112);
+  --light-blue-4: rgb(182,194,206);
+  --light-blue:  #9cd0f9;
+  --light-blue-2:  #87b6e9;
+  --light-blue-1:  #71a2d6;
+  --mid-blue:    #0e6acd;
+  --mid-blue-2:    #1e5b9d;
+  --mid-blue-1:    #36689e;
+
+  --leaf:        #008000;
+  --leaf-deep:   #005a00;
+  --leaf-wash:   #e6f2e6;
+  --amber:       #b8860b;
+  --amber-wash:  #fff6cf;
+  --plum:        #c00000;
+  --plum-deep:   #800000;
+  --plum-wash:   #ffe1e1;
+  --sun:         #b8860b;
+  --sun-light:   #fac02d;
+  --sun-wash:  #ffd978;
+
+  --radius:      0px;
+  --radius-sm:   0px;
+  --shadow:      1px 1px 0 var(--sh-dark);
+
+  --sans: Tahoma, "MS Sans Serif", "Segoe UI", Arial, sans-serif;
+}
+
+/* the classic "Eggplant" dark scheme */
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --face:        #4b3b54;
+    --face-light:  #392b40;
+    --face-white:  #2a1f30;
+    --hi:          #8a7793;
+    --hi-soft:     #5c4a66;
+    --sh:          #241a29;
+    --sh-dark:     #120e15;
+    --ink:         #f1e9f4;
+    --ink-soft:    #ddd0e2;
+    --muted:       #b3a0ba;
+    --rule:        #241a29;
+    --rule-soft:   #5c4a66;
+
+    --navy-dark:   #3a1d52;
+    --navy-light:  #a385c9;
+    --navy-solid:  #2c1240;
+    --teal:        #17131c;
+
+    --leaf:        #7bc47f;
+    --leaf-deep:   #57a35c;
+    --leaf-wash:   #223822;
+    --amber:       #e0c169;
+    --amber-wash:  #3a331d;
+    --plum:        #e0708a;
+    --plum-deep:   #b34f68;
+    --plum-wash:   #3a2430;
+    --sun:         #e0c169;
+    --shadow:      1px 1px 0 #000;
+  } 
+}
+ */
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--rule-soft);
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--face) 22%, transparent) 1px, transparent 1px);
+  background-size: 3px 3px;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: 0; }
+
+a { color: var(--navy-solid); }
+@media (prefers-color-scheme: dark) { a { color: var(--navy-light); } }
+
+:focus-visible {
+  outline: 1px dotted var(--ink);
+  outline-offset: 1px;
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* chunky classic scrollbars where the browser allows it */
+* { scrollbar-width: auto; scrollbar-color: var(--face) var(--face-light); }
+*::-webkit-scrollbar { width: 16px; height: 16px; }
+*::-webkit-scrollbar-track { background: var(--face-light); border: 1px solid var(--sh); }
+*::-webkit-scrollbar-thumb {
+  background: var(--face);
+  border: 2px outset var(--face);
+}
+*::-webkit-scrollbar-thumb:active { border-style: inset; }
+
+#space {
+  padding: 8px 8px 8px 8px;
+}
+
+/* ---------- layout ---------- */
+
+.wrap {
+  max-width: 1360px;
+  margin: 14px auto 60px;
+  padding: 0 14px 40px;
+  background: var(--face-light);
+  border: 2px outset var(--face);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, .35);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: linear-gradient(90deg, var(--mid-blue) 0%, var(--light-blue) 100%);
+  border-bottom: 2px solid var(--sh-dark);
+  box-shadow: 0 2px 0 var(--face), 0 3px 6px rgba(0, 0, 0, .3);
+}
+
+.topbar-in {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wordmark {
+  background: none;
+  border: 0;
+  padding: 2px 4px;
+  cursor: pointer;
+  font: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: #fff;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, .55);
+}
+.wordmark::before {
+  content: "\1FAB4";
+  /* content: "\1F338";  /* a little flower, in lieu of a proper .ico */
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 15px;
+  vertical-align: -2px;
+  filter: drop-shadow(1px 1px 0 rgba(0,0,0,.4));
+}
+
+.topbar-actions { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ---------- buttons: the classic beveled 3D button ---------- */
+
+.btn {
+  font: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--face);
+  border: 2px outset var(--face);
+  border-radius: 0;
+  padding: 4px 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: color-mix(in srgb, var(--face) 90%, white); }
+.btn:active {
+  border-style: inset;
+  padding: 5px 10px 3px 12px; /* text nudges down-right on press, like the real thing */
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--face);
+  border-color: var(--face);
+  color: var(--ink);
+  font-weight: 700;
+  outline: 1px solid var(--navy-solid);
+  outline-offset: -3px;
+}
+.btn-primary:hover { background: color-mix(in srgb, var(--face) 88%, white); }
+@media (prefers-color-scheme: dark) { .btn-primary { outline-color: var(--navy-light); } }
+
+.btn-quiet {
+  font: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  background: transparent;
+  border-color: transparent;
+  color: var(--windows95-blue);
+  text-decoration: underline;
+}
+.btn-quiet:hover { color: var(--plum-deep); text-decoration: underline;}
+
+.btn-danger { color: var(--plum-deep); }
+.btn-danger:hover { background: var(--plum-wash); }
+
+.btn-sm { font-size: 11px; padding: 2px 8px; }
+.btn-sm:active { padding: 3px 7px 1px 9px; }
+
+.icon-btn {
+  background: var(--face);
+  border: 2px outset var(--face);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-btn:hover { background: color-mix(in srgb, var(--face) 90%, white); }
+.icon-btn:active { border-style: inset; }
+
+/* ---------- summary strip ---------- */
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  align-items: center;
+  margin: 12px 0 14px;
+  padding: 8px 12px;
+  background: var(--face);
+  border: 2px inset var(--face);
+}
+.strip-item { display: flex; align-items: baseline; gap: 7px; }
+.strip-num { font-size: 18px; font-weight: 700; letter-spacing: 0; }
+.strip-label { font-size: 11.5px; color: var(--muted); }
+.strip-item.is-alert .strip-num { color: var(--plum-deep); }
+
+/* ---------- toolbar ---------- */
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding: 6px;
+  background: var(--face);
+  border: 2px outset var(--face);
+}
+
+.field-search {
+  flex: 1 1 220px;
+  min-width: 170px;
+  max-width: 340px;
+}
+
+input, select, textarea {
+  font: var(--sans);
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--face-white);
+  border: 2px inset var(--face);
+  border-radius: 0;
+  padding: 3px 6px;
+  width: 100%;
+}
+textarea { resize: vertical; min-height: 68px; line-height: 1.5; }
+input::placeholder { color: var(--muted); opacity: .8; }
+input[type="checkbox"] { width: auto; border: 1px inset var(--face); }
+
+.seg { display: flex; gap: 0; background: transparent; }
+.seg button {
+  font: var(--sans); font-size: 12px;
+  background: var(--face); border: 2px outset var(--face);
+  padding: 4px 10px; cursor: pointer; color: var(--ink);
+  margin-right: -2px;
+}
+.seg button:last-child { margin-right: 0; }
+.seg button[aria-pressed="true"] {
+  border-style: inset;
+  background: color-mix(in srgb, var(--face) 85%, black 6%);
+  font-weight: 700;
+}
+
+/* ---------- table ---------- */
+
+.table-card {
+  background: var(--face-white);
+  border: 2px inset var(--face);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.table-scroll { overflow-x: auto; }
+
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--windows95-navy);
+  border: 1px outset var(--face);
+  border-top: 0;
+  text-align: left;
+  font-weight: 700;
+  font-size: 11.5px;
+  color: var(--hi);
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+thead th.sortable { cursor: pointer; user-select: none; }
+thead th.sortable:hover { background: color-mix(in srgb, var(--face) 90%, white); }
+thead th.sortable:active { border-style: inset; }
+thead th .caret { color: var(--navy-solid); margin-left: 3px; }
+
+tbody td {
+  border-bottom: 1px solid var(--rule-soft);
+  border-right: 1px solid var(--rule-soft);
+  padding: 6px 10px;
+  vertical-align: middle;
+  white-space: nowrap;
+  background: var(--face-white);
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr.row-plant { cursor: pointer; }
+tbody tr.row-plant:hover td { background: var(--navy-light); color: #000; }
+
+td.num, th.num { text-align: right; }
+td.wrap-cell { white-space: normal; min-width: 180px; }
+
+/* pinned "quick actions" column — stays put while the rest scrolls, like a frozen column in a spreadsheet */
+th.col-actions, td.col-actions {
+  position: sticky;
+  right: 0;
+  box-shadow: -6px 0 8px -6px rgba(0, 0, 0, .4), -2px 0 0 var(--sh);
+}
+td.col-actions { z-index: 1; }
+
+.cell-name { font-weight: 700; color: var(--ink); }
+.cell-sub { display: block; font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 1px; }
+.plant-light { color: var(--plum); }
+
+.dash { color: var(--muted); }
+
+/* meters — recreated as the classic chunky segmented progress bar */
+.meter { display: flex; align-items: center; gap: 8px; min-width: 128px; }
+.meter-track {
+  flex: 1;
+  height: 14px;
+  border: 1px inset var(--face);
+  background: var(--face-white);
+  overflow: hidden;
+  padding: 1px;
+}
+.meter-fill {
+  height: 100%;
+  background-color: var(--leaf);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,.55) 0px, rgba(255,255,255,.55) 2px,
+    transparent 2px, transparent 5px
+  );
+}
+.meter-num { font-size: 11.5px; color: var(--muted); min-width: 36px; text-align: right; }
+
+.is-soon  .meter-fill { background-color: var(--amber); }
+.is-due   .meter-fill { background-color: var(--plum); }
+.is-over  .meter-fill { background-color: var(--plum-deep); }
+.is-light .meter-fill { background-color: var(--sun); }
+
+/* moisture reading pill — small beveled badge */
+.pill {
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border: 1px solid var(--sh-dark);
+  background: var(--face);
+  color: var(--ink);
+}
+.pill-of { font-weight: 400; font-size: 10.5px; opacity: .7; }
+.pill-dry  { background: var(--plum-wash);  color: var(--plum-deep); border-color: var(--plum-deep); }
+.pill-soon { background: var(--amber-wash); color: var(--amber); border-color: var(--amber); }
+.pill-wet  { background: var(--leaf-wash);  color: var(--leaf-deep); border-color: var(--leaf-deep); }
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border: 1px solid var(--leaf-deep);
+  background: var(--leaf-wash);
+  color: var(--leaf-deep);
+  white-space: nowrap;
+}
+.tag-soon { background: var(--amber-wash); color: var(--amber); border-color: var(--amber); }
+.tag-due  { background: var(--plum-wash);  color: var(--plum-deep); border-color: var(--plum-deep); }
+.tag-none { background: var(--face);  color: var(--muted); border-color: var(--rule-soft); }
+
+/* ---------- empty state ---------- */
+
+.empty {
+  background: var(--face-white);
+  border: 2px groove var(--face);
+  padding: 54px 26px;
+  text-align: center;
+}
+.empty h2 { font-size: 16px; margin-bottom: 6px; }
+.empty p { color: var(--muted); margin: 0 auto 18px; max-width: 46ch; }
+
+/* ---------- plant detail ---------- */
+
+.crumb {
+  background: none; border: 0; padding: 2px; cursor: pointer;
+  font: var(--sans); font-size: 12px; color: var(--windows95-blue); margin-bottom: 14px;
+  text-decoration: underline;
+}
+.crumb:hover { color: var(--plum-deep); }
+@media (prefers-color-scheme: dark) { .crumb { color: var(--windows95-blue); } }
+
+.detail-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 8px 10px;
+  background: linear-gradient(90deg, var(--mid-blue) 0%, var(--light-blue) 100%);
+  border: 2px outset var(--face);
+}
+.detail-head h1 { font-size: 18px; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,.5); }
+.detail-head .species { color: var(--sun-wash); font-size: 12px; margin-top: 2px; }
+.detail-head-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+  gap: 2px;
+  background: var(--sh);
+  border: 2px inset var(--face);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.stat { background: var(--face-white); padding: 10px 14px; }
+.stat-num { font-size: 19px; font-weight: 700; letter-spacing: 0; line-height: 1.15; }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.stat-note { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+
+.panel {
+  background: var(--face-white);
+  border: 2px outset var(--face);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.panel-head {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 4px 10px;
+  border-bottom: 2px solid var(--sh);
+  background: linear-gradient(90deg, var(--mid-blue) 0%, var(--light-blue) 100%);
+}
+.panel-head h2 { font-size: 12.5px; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,.5); }
+.panel-head .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.panel-pad { padding: 14px; }
+
+.spec {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 13px 26px;
+}
+.spec dt { font-size: 11px; color: var(--muted); margin-bottom: 2px; font-weight: 700; }
+.spec dd { margin: 0; font-size: 13px; }
+.spec dd.long { white-space: pre-wrap; line-height: 1.55; max-width: 70ch; }
+
+/* ---------- charts (styled via the classes app.js already assigns) ---------- */
+.chart { background: var(--face-white); border: 1px inset var(--face); }
+.cx-line { stroke: var(--sun); }
+.cx-line-moist { stroke: var(--leaf); }
+.cx-area { fill: var(--sun); opacity: .16; }
+.cx-grid { stroke: var(--rule-soft); }
+.cx-today { stroke: var(--plum); }
+.cx-dot { fill: var(--plum); }
+.cx-mark { stroke: var(--leaf-deep); }
+.cx-threshold { stroke: var(--plum); }
+.cx-dot-read { fill: var(--face-white); stroke: var(--leaf-deep); }
+.cx-dot-water { fill: var(--leaf); }
+.cx-tick { font-family: var(--sans); fill: var(--muted); }
+.cx-right { text-anchor: end; }
+.chart-caption { font-size: 11.5px; color: var(--muted); margin: 6px 0 0; max-width: 68ch; }
+
+/* long/short day comparison */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2px;
+  background: var(--sh);
+  border: 2px inset var(--face);
+  overflow: hidden;
+}
+.compare-side { background: var(--face-white); padding: 14px; }
+.compare-num { font-size: 21px; font-weight: 700; letter-spacing: 0; }
+.compare-label { font-size: 12px; color: var(--ink-soft); margin-top: 3px; max-width: 28ch; }
+
+/* banner */
+.banner {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: var(--amber-wash);
+  border: 2px groove var(--face);
+  padding: 10px 14px;
+  margin: 12px 0 4px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  max-width: 100%;
+}
+.banner div { flex: 1 1 320px; max-width: 70ch; }
+.banner .btn { flex: 0 0 auto; }
+
+.panel-note { font-size: 13px; color: var(--ink-soft); margin: 14px 0 6px; max-width: 72ch; line-height: 1.55; }
+.modal-lede { margin: 0 0 14px; color: var(--ink-soft); max-width: 60ch; font-size: 12.5px; }
+.modal-hint { font-size: 11.5px; color: var(--muted); margin: 12px 0 0; min-height: 2.6em; max-width: 58ch; }
+.stats-flat { box-shadow: none; margin-bottom: 0; border-style: inset; }
+code {
+  font-family: "Courier New", monospace;
+  font-size: .95em;
+  background: var(--face);
+  border: 1px inset var(--face);
+  padding: 0 4px;
+}
+
+/* ---------- scale (0–10 moisture picker) — calculator-key look ---------- */
+.scale { margin-top: 2px; }
+.scale-row { display: flex; gap: 3px; flex-wrap: wrap; }
+.scale-btn {
+  flex: 1 1 0;
+  min-width: 34px;
+  font: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 0;
+  cursor: pointer;
+  color: var(--ink);
+  background: var(--face);
+  border: 2px outset var(--face);
+}
+.scale-btn:hover { background: color-mix(in srgb, var(--face) 90%, white); }
+.scale-btn[aria-pressed="true"] {
+  border-style: inset;
+  background: var(--navy-light);
+  color: #000;
+}
+.scale-ends {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--muted); margin-top: 5px;
+}
+
+/* ---------- chips — toggle-button look, not pills ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip {
+  font: var(--sans); font-size: 12px; font-weight: 400;
+  background: var(--face); border: 2px outset var(--face);
+  padding: 4px 10px; cursor: pointer; color: var(--ink);
+}
+.chip:hover { background: color-mix(in srgb, var(--face) 90%, white); }
+.chip[aria-pressed="true"] {
+  border-style: inset;
+  background: var(--navy-light);
+  color: #000;
+  font-weight: 700;
+}
+
+/* ---------- modal: a classic dialog box ---------- */
+.modal-layer {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 5vh 16px 16px;
+  overflow-y: auto;
+}
+.modal-layer[hidden] { display: none; }
+
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .35); }
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: var(--face);
+  border: 2px outset var(--face);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .4);
+  margin-bottom: 5vh;
+}
+.modal-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 5px 6px 5px 10px;
+  background: var(--windows95-navy);
+}
+.modal-head h2 { font-size: 13px; color: #fff; font-weight: 700; text-shadow: 1px 1px 0 rgba(0,0,0,.5); }
+.modal-head .icon-btn { margin-left: auto; }
+.modal-body { padding: 14px; background: var(--face); }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+.form-grid .span-2 { grid-column: 1 / -1; }
+.field label { display: block; font-size: 11.5px; color: var(--ink-soft); font-weight: 700; margin-bottom: 3px; }
+.field .hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+.form-section {
+  grid-column: 1 / -1;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--windows95-navy);
+  border-top: 1px groove var(--face);
+  padding-top: 12px;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+@media (prefers-color-scheme: dark) { .form-section { color: var(--windows95-navy); } }
+.form-grid > .form-section:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+
+.form-actions {
+  display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;
+  margin-top: 16px; padding-top: 12px; border-top: 1px groove var(--face);
+}
+.form-actions .left { margin-right: auto; }
+
+/* ---------- toast: a Windows balloon tip ---------- */
+.toast {
+  position: fixed;
+  left: 50%; bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 80;
+  background: var(--amber-wash);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 400;
+  padding: 8px 14px;
+  border: 1px solid var(--sh-dark);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, .35);
+  max-width: 90vw;
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 640px) {
+  .wrap { margin: 0; padding: 0 8px 60px; border-width: 0 0 2px 0; }
+  .topbar-in { padding: 5px 8px; }
+  .topbar-actions .btn { font-size: 11.5px; padding: 4px 8px; }
+  .detail-head h1 { font-size: 16px; }
+}

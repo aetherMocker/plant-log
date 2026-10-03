@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant log</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>&#127793;</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="wordmark" id="home-btn" type="button">Plant&nbsp;log</button>
+    <div class="topbar-actions">
+      <button class="btn" id="history-btn" type="button">History</button>
+      <button class="btn" id="settings-btn" type="button">Settings</button>
+      <button class="btn" id="export-csv-btn" type="button">Export table</button>
+      <button class="btn" id="backup-btn" type="button">Backup</button>
+      <button class="btn btn-primary" id="new-plant-btn" type="button">Add a plant</button>
+    </div>
+  </div>
+</header>
+
+<div id="space"><main id="app" class="wrap"></main></div>
+
+<div class="modal-layer" id="modal-layer" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <h2 id="modal-title"></h2>
+      <button class="icon-btn" type="button" data-close-modal aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="solar.js"></script>
+
+<script src="/js/constants.js"></script>
+<script src="/js/state.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/plant-status.js"></script>
+<script src="/js/charts.js"></script>
+<script src="/js/view-overview.js"></script>
+<script src="/js/view-history.js"></script>
+<script src="/js/view-plant.js"></script>
+<script src="/js/modal.js"></script>
+<script src="/js/forms.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/actions.js"></script>
+<script src="/js/export.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
