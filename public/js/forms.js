@@ -96,6 +96,14 @@ function plantForm(plant) {
         <input id="f-checkevery" type="number" min="0" step="1" value="${esc(p.checkEveryDays)}" placeholder="leave blank">
         <div class="hint">Blank is best because the app works out how fast this one dries from your own logs,
           and keeps up as the seasons change!</div></div>
+      <div class="field span-2">
+        <label style="display:flex;gap:8px;align-items:center;font-weight:400">
+          <input type="checkbox" id="f-drought" style="width:auto;margin:0"${p.droughtTolerant ? ' checked' : ''}>
+          Succulent or cactus — comfortable sitting dry, don't nudge me early
+        </label>
+        <div class="hint">Narrows the "worth a check" gradient so it only climbs right near your water-at
+          line, instead of flagging a plant that's supposed to sit mostly dry most of the time.</div>
+      </div>
 
       <div class="form-section">Pot and place</div>
       <div class="field"><label for="f-potsize">Pot size</label>
@@ -134,6 +142,7 @@ function plantForm(plant) {
       waterMethod: val('f-method'),
       waterAt: val('f-waterat'),
       checkEveryDays: val('f-checkevery'),
+      droughtTolerant: document.getElementById('f-drought').checked,
       potSize: val('f-potsize'),
       potColor: val('f-potcolor'),
       location: val('f-location'),

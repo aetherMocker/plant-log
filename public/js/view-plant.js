@@ -161,6 +161,9 @@ function renderPlant(id) {
         <dl class="spec">
           ${spec('How to water', p.waterMethod)}
           ${spec('Water when the meter reads', `${waterAt(p)} or below`)}
+          ${spec('Watering personality', p.droughtTolerant
+            ? `Drought-tolerant — narrow "worth a check" buffer (${checkBuffer(p)} units above the line)`
+            : '')}
           ${spec('Window', p.windowDirection ? `faces ${p.windowDirection}` : '')}
           ${spec('Distance from glass', p.distance)}
           ${spec('In the way', p.obstruction)}

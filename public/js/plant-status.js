@@ -92,11 +92,17 @@ function checkStatus(plant) {
     (!lastWater || reading.date >= lastWater.date) ? reading : null;
 
   if (currentReading) {
-    /* Scale smoothly from "just watered" (MOISTURE_MAX) down to the
-    water-at line, so a reading near the line shows a gradient instead
-    of jumping straight to full red. */
-    const span = Math.max(1, MOISTURE_MAX - threshold);
-    const ratio = (MOISTURE_MAX - currentReading.moisture) / span;
+    /* The "approaching time to check" zone is a fixed number of meter
+       units above the water-at line — NOT a fraction of the whole
+       0–MOISTURE_MAX scale. Scaling against the full scale punished
+       plants with a low water-at line (succulents, cacti): a reading
+       just 1–2 units above their line used up most of that huge span
+       and read as "due," even though sitting barely above the line is
+       exactly where a drought-tolerant plant is supposed to live most
+       of the time. checkBuffer() picks a buffer width per plant. */
+    const buffer = checkBuffer(plant);
+    const above = currentReading.moisture - threshold; // meter units above the line
+    const ratio = Math.max(0, 1 - above / buffer);      // 1 = right at the line, 0 = a full buffer clear of it
     const pct = Math.max(3, Math.min(100, ratio * 100));
     const atOrBelow = currentReading.moisture <= threshold;
     const key = atOrBelow ? 'over' : ratio < 0.6 ? 'ok' : ratio < 0.85 ? 'soon' : 'due';
@@ -106,10 +112,24 @@ function checkStatus(plant) {
 
   if (since === null || !dd) return { key: 'none', since, dd, pct: 0, sort: -1, label: '' };
 
-  // No fresh reading to go on yet — fall back to the calendar rhythm.
+  /* No fresh reading to go on yet — fall back to the calendar rhythm.
+     This part already adapts per plant on its own, no extra setting
+     needed: dd.days comes from *this plant's* own recent watering gaps,
+     so a succulent that's historically gone 40 days between waterings
+     won't get flagged until it's proportionally close to 40 days again. */
   const ratio = since / dd.days;
   const key = ratio < 0.6 ? 'ok' : ratio < 0.9 ? 'soon' : ratio < 1.3 ? 'due' : 'over';
   return { key, since, dd, pct: Math.max(3, Math.min(100, ratio * 100)), sort: ratio, label: `${since}/${dd.days}d` };
+}
+
+/** How many meter units above the water-at line still feel comfortable,
+    before the "worth a check" meter starts climbing. An explicit
+    plant.checkBuffer (set by hand in data.json, say) always wins; otherwise
+    it's the drought-tolerant or standard default from constants.js. */
+function checkBuffer(plant) {
+  const explicit = Number(plant.checkBuffer);
+  if (explicit > 0) return explicit;
+  return plant.droughtTolerant ? DROUGHT_TOLERANT_CHECK_BUFFER : STANDARD_CHECK_BUFFER;
 }
 
 /** Today's light for a plant, or null if latitude isn't set yet. */
