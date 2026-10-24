@@ -6,11 +6,15 @@
  * data.json into /backups, keeping the most recent 20.
  *
  * Run with:  node server.js
+ *
+ * Binds to 0.0.0.0 so the app is reachable from a phone on the same
+ * Wi-Fi. Open one of the printed Network URLs on the phone.
  */
 
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
 
 const PORT = Number(process.env.PORT) || 4321;
 const ROOT = __dirname;
@@ -136,6 +140,21 @@ function serveStatic(req, res, urlPath) {
   });
 }
 
+/* ---------- network helpers ---------- */
+
+function localIPs() {
+  const out = [];
+  const nets = os.networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name] || []) {
+      if (net.family === 'IPv4' && !net.internal) {
+        out.push({ iface: name, address: net.address });
+      }
+    }
+  }
+  return out;
+}
+
 /* ---------- routes ---------- */
 
 const server = http.createServer(async (req, res) => {
@@ -177,12 +196,21 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, '0.0.0.0', () => {
   readDB(); // creates data.json on first run
   console.log(`\n  Plant log is running.`);
-  console.log(`  Open  http://localhost:${PORT}`);
-  console.log(`  Data  ${DATA_FILE}`);
-  console.log(`  Stop  Ctrl+C\n`);
+  console.log(`  Local:    http://localhost:${PORT}`);
+  const ips = localIPs();
+  if (ips.length === 0) {
+    console.log(`  Network:  (no LAN interface found — are you on Wi-Fi?)`);
+  } else {
+    for (const { iface, address } of ips) {
+      console.log(`  Network:  http://${address}:${PORT}   (${iface})`);
+    }
+  }
+  console.log(`  Data      ${DATA_FILE}`);
+  console.log(`\n  Phone must be on the same Wi-Fi network.`);
+  console.log(`  Stop      Ctrl+C\n`);
 });
 
 server.on('error', (err) => {

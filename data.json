@@ -160,7 +160,7 @@
       "windowDirection": "N",
       "distance": "Within 3 feet",
       "obstruction": "Nothing in the way",
-      "growLightHours": "",
+      "growLightHours": "12",
       "waterMethod": "Bottom water (soak)",
       "waterAt": "1",
       "checkEveryDays": "",
@@ -169,7 +169,8 @@
       "location": "plant stand shelf",
       "soil": "coarse sand, perlite, pumice, potting soil",
       "careNotes": "",
-      "notes": "keep close eye on growth. roots are minimal and delicate, so be careful about repotting. same with leaves & branches, they break off easily— maybe investigate that"
+      "notes": "keep close eye on growth. roots are minimal and delicate, so be careful about repotting. same with leaves & branches, they break off easily— maybe investigate that",
+      "droughtTolerant": false
     },
     {
       "id": "mu6aal47yas2ka",
@@ -646,6 +647,28 @@
       "soil": "perlite and potting soil",
       "careNotes": "water when soil is dry, repot once rootbound— but not for a while since it needs quarantining rn (mid-october)",
       "notes": ""
+    },
+    {
+      "id": "mvmlhe7dnkz8jn",
+      "archived": false,
+      "createdAt": "2026-10-24T16:10:01.897Z",
+      "name": "purple trandescantia",
+      "species": "trandescantia tricolor",
+      "acquired": "2026-10-23",
+      "windowDirection": "N",
+      "distance": "Within 3 feet",
+      "obstruction": "Nothing in the way",
+      "growLightHours": "",
+      "waterMethod": "Drench & drain",
+      "waterAt": "3",
+      "checkEveryDays": "",
+      "droughtTolerant": false,
+      "potSize": "5\"",
+      "potColor": "clear plastic",
+      "location": "window sill",
+      "soil": "perlite, leca, orchid bark, potting soil",
+      "careNotes": "medium-high light (likes partial shade too), water when soil is dry, propagate and stick back into pot for bushier look",
+      "notes": "eventually plant all the cuttings"
     }
   ],
   "logs": [
