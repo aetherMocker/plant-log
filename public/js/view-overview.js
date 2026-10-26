@@ -113,7 +113,7 @@ function renderOverview() {
         <td>${lr ? esc(agoPhrase(daysSince(lr.date))) : '<span class="dash">—</span>'}</td>
         <td class="col-actions">
           <button class="btn btn-sm btn-primary" data-action="quick-check" data-plant="${esc(p.id)}" type="button">Check</button>
-          <button class="btn btn-sm btn-quiet" data-action="new-log" data-plant="${esc(p.id)}" type="button">Log</button>
+          <button class="btn btn-sm" data-action="new-log" data-plant="${esc(p.id)}" type="button">Log</button>
         </td>
       </tr>`;
   }).join('');
@@ -152,7 +152,7 @@ function renderOverview() {
         <button type="button" data-filter="dim"      aria-pressed="${ui.filter === 'dim'}">Low light</button>
         <button type="button" data-filter="archived" aria-pressed="${ui.filter === 'archived'}">Archived</button>
       </div>
-      <button class="btn-quiet" data-action="new-log" type="button">Log something</button>
+      <button class="btn btn-primary" data-action="new-log" type="button">Log something</button>
     </div>
 
     <div class="table-card">

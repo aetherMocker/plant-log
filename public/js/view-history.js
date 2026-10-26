@@ -27,8 +27,8 @@ function renderHistory() {
         <td class="wrap-cell">${esc(l.detail) || '<span class="dash">—</span>'}</td>
         <td class="wrap-cell">${esc(l.notes) || '<span class="dash">—</span>'}</td>
         <td>
-          <button class="btn-sm btn-quiet" data-action="edit-log" data-log="${esc(l.id)}" type="button">Edit</button>
-          <button class="btn-sm btn-quiet" data-action="delete-log" data-log="${esc(l.id)}" type="button">Delete</button>
+          <button class="btn btn-sm" data-action="edit-log" data-log="${esc(l.id)}" type="button">Edit</button>
+          <button class="btn btn-sm" data-action="delete-log" data-log="${esc(l.id)}" type="button">Delete</button>
         </td>
       </tr>`;
   }).join('');

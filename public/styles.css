@@ -151,13 +151,14 @@ a:visited { color: #800080; }
 
 /* title bar. The text is a pseudo-element, so change the name here. */
 .wrap::before {
-  content: "\1FAB4\00a0 Plant log";
+  content: "Plant log";
   display: flex;
   align-items: center;
   height: 20px;
   margin: 0 -11px 14px;
-  padding: 0 60px 0 4px;
-  background: var(--title-bg);
+  padding: 0 60px 0 24px;
+  background: url("favicon.png") 4px center / 16px 16px no-repeat, var(--title-bg);
+  image-rendering: pixelated;
   color: #fff;
   font-weight: 700;
   font-size: 12px;
@@ -217,10 +218,13 @@ body:has(.modal-layer:not([hidden]) .modal) .wrap::before { background: var(--ti
 }
 .wordmark:active { box-shadow: 0 0 0 1px #000, var(--bevel-pressed); padding: 1px 7px 0 6px; }
 .wordmark::before {
-  content: "\1FAB4";
+  content: "";
   display: inline-block;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
-  font-size: 14px;
+  background: url("favicon.png") center / contain no-repeat;
+  image-rendering: pixelated;
 }
 .wordmark:focus-visible { outline-offset: -5px; }
 
@@ -252,23 +256,10 @@ body:has(.modal-layer:not([hidden]) .modal) .wrap::before { background: var(--ti
 .btn-primary { box-shadow: 0 0 0 1px #000, var(--bevel-raised); font-weight: 700; }
 .btn-primary:active { box-shadow: 0 0 0 1px #000, var(--bevel-pressed); }
 
-/* looks like a hyperlink */
-.btn-quiet {
-  background: transparent;
-  box-shadow: none;
-  min-height: 0;
-  padding: 3px 6px;
-  color: var(--windows95-blue);
-  text-decoration: underline;
-}
-.btn-quiet:hover { color: #f00; }
-.btn-quiet:active { box-shadow: none; padding: 3px 6px; color: #f00; }
-
 .btn-danger { color: var(--plum-deep); }
 
 .btn-sm { font-size: 11px; padding: 2px 9px; min-height: 20px; }
 .btn-sm:active { padding: 3px 8px 1px 10px; }
-.btn-quiet.btn-sm, .btn-quiet.btn-sm:active { padding: 2px 5px; }
 
 .btn:disabled, .btn[disabled], .scale-btn:disabled, .chip:disabled, .seg button:disabled {
   color: #808080;
@@ -743,4 +734,9 @@ code {
   .topbar-in { padding: 4px 3px 2px; }
   .topbar-actions .btn { font-size: 11.5px; padding: 3px 8px; }
   .detail-head h1 { font-size: 14px; }
+}
+
+body:has(.modal-layer:not([hidden]) .modal) .wrap::before {
+  background: url("favicon.png") 4px center / 16px 16px no-repeat, var(--title-bg-off);
+  color: #c0c0c0;
 }
